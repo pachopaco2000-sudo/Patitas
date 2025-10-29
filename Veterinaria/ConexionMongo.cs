@@ -9,6 +9,7 @@ namespace Veterinaria
 {
     public static class ConexionMongo
     {
+<<<<<<< HEAD
         // Nombre por defecto de tu DB en Atlas (cámbialo si usas otro)
         private const string DefaultDatabaseName = "Patitas";
 
@@ -44,6 +45,13 @@ namespace Veterinaria
         /// Esto mantiene compatibilidad con el uso anterior de ConexionMongo.Connect(...).
         /// </summary>
         public static void Connect(string connectionString, string databaseName)
+=======
+        private static readonly string Puerto = "mongodb://localhost:27017";
+        private static readonly string BasedeDatos = "Veterinaria";
+        private static IMongoDatabase _database;
+
+        public static IMongoDatabase ObtenerConexion()
+>>>>>>> 4b99512c3d564b1d01b32b52042c540a9d29cede
         {
             if (string.IsNullOrWhiteSpace(connectionString)) throw new ArgumentException("Se requiere la cadena de conexión", nameof(connectionString));
             if (string.IsNullOrWhiteSpace(databaseName)) throw new ArgumentException("Se requiere el nombre de la base de datos", nameof(databaseName));
@@ -53,6 +61,7 @@ namespace Veterinaria
                 // Forzamos TLS1.2
                 try { ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12; } catch { }
 
+<<<<<<< HEAD
                 var settings = MongoClientSettings.FromConnectionString(connectionString);
                 settings.ServerSelectionTimeout = TimeSpan.FromSeconds(5);
                 settings.ConnectTimeout = TimeSpan.FromSeconds(5);
@@ -125,6 +134,45 @@ namespace Veterinaria
         public static bool TestConnection(string dbName = null)
         {
             return TestConnectionAsync(dbName).GetAwaiter().GetResult();
+=======
+                var client = new MongoClient(Puerto);
+
+                // 🔍 Forzar conexión con el servidor antes de acceder a la base
+                var databases = client.ListDatabaseNames().ToList();
+
+                _database = client.GetDatabase(BasedeDatos);
+
+                // Opcional: ver colecciones existentes
+                var collections = _database.ListCollectionNames().ToList();
+
+                return _database;
+            }
+            catch (Exception ex)
+            {
+                string mensajeError =
+                    $"Error conectando a MongoDB:\n{ex.Message}\n\n" +
+                    "Verifica:\n" +
+                    "1. Que MongoDB esté instalado\n" +
+                    "2. Que el servicio esté ejecutándose\n" +
+                    "3. Que la base de datos exista en Compass";
+
+                MessageBox.Show(mensajeError, "Error de Conexión",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        public static bool EstaConectado()
+        {
+            try { return ObtenerConexion() != null; }
+            catch { return false; }
+        }
+
+        public static string ObtenerInfoConexion()
+        {
+            string estado = EstaConectado() ? "✅ Conectado" : "❌ Desconectado";
+            return $"Modo: Local (Compass)\nEstado: {estado}\nBase de datos: {BasedeDatos}";
+>>>>>>> 4b99512c3d564b1d01b32b52042c540a9d29cede
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Veterinaria
                 mail.From = new MailAddress(remitente, "Soporte Agenda Médica");
                 mail.To.Add(correo);
                 mail.Subject = "Código de recuperación de contraseña";
-                mail.Body = $"Hola {usuario.nombre},\n\nTu código de recuperación es: {codigoGenerado}\n\nSi no solicitaste este cambio, ignora este mensaje.";
+                mail.Body = $"Hola {usuario.nombreUsuario},\n\nTu código de recuperación es: {codigoGenerado}\n\nSi no solicitaste este cambio, ignora este mensaje.";
                 mail.IsBodyHtml = false;
 
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);

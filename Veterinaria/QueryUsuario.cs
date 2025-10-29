@@ -28,7 +28,7 @@ namespace Veterinaria
         {
             try
             {
-                var filter = Builders<Usuarios>.Filter.Eq(u => u.numeroDocumento, numeroDocumento);
+                var filter = Builders<Usuarios>.Filter.Eq(u => u.numerodocumento, numeroDocumento);
                 return _usuariosCollection.Find(filter).FirstOrDefault();
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace Veterinaria
         {
             try
             {
-                var filter = Builders<Usuarios>.Filter.Eq(u => u.correo, email);
+                var filter = Builders<Usuarios>.Filter.Eq(u => u.emailUsuario, email);
                 return _usuariosCollection.Find(filter).FirstOrDefault();
             }
             catch (Exception ex)
@@ -63,7 +63,7 @@ namespace Veterinaria
         {
             try
             {
-                var filter = Builders<Usuarios>.Filter.Eq(u => u.correo, email);
+                var filter = Builders<Usuarios>.Filter.Eq(u => u.emailUsuario, email);
                 var update = Builders<Usuarios>.Update
                     .Set(u => u.contraseña, nuevaContraseña);
 
@@ -73,7 +73,7 @@ namespace Veterinaria
             catch (Exception ex)
             {
                 Task.Run(() =>
-                    MessageBox.Show($"Error al actualizar contraseña: {ex.Message}", "Errojr",
+                    MessageBox.Show($"Error al actualizar contraseña: {ex.Message}", "Error",
                                   MessageBoxButtons.OK, MessageBoxIcon.Error)
                 );
                 return false;
@@ -86,7 +86,7 @@ namespace Veterinaria
             try
             {
                 var filter = Builders<Usuarios>.Filter.And(
-                    Builders<Usuarios>.Filter.Eq(u => u.numeroDocumento, numeroDocumento),
+                    Builders<Usuarios>.Filter.Eq(u => u.numerodocumento, numeroDocumento),
                     Builders<Usuarios>.Filter.Eq(u => u.contraseña, contraseña)
                 );
                 return _usuariosCollection.Find(filter).FirstOrDefault();

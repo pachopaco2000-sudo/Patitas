@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Veterinaria
 {
-    public class Cita
+    public class Citas
     {
+
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public string _id { get; set; }
+        public ObjectId _id { get; set; }
 
         [BsonElement("usuario_id")]
         public string UsuarioId { get; set; }

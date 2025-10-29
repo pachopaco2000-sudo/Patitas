@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,7 +38,7 @@ namespace Veterinaria
                 //_usuarioActual = usuario;
 
                 ConfigurarDataGrid();
-                CargarCitasUsuario(_usuarioActual._id);
+                CargarCitasUsuario(_usuarioActual._id.ToString());
 
                 dgvCitas.SelectionChanged += dgvCitas_SelectionChanged;
             }
@@ -335,11 +336,11 @@ namespace Veterinaria
 
         private void CargarDatosUsuario()
         {
-            txtDocumento.Text = _usuarioActual._id;
-            txtNombre.Text = _usuarioActual.nombre;
-            txtApellido.Text = _usuarioActual.apellidos;
-            txtTelefono.Text = _usuarioActual.telefono;
-            txtCorreo.Text = _usuarioActual.correo;
+            txtDocumento.Text = _usuarioActual._id.ToString();
+            txtNombre.Text = _usuarioActual.nombreUsuario;
+            txtApellido.Text = _usuarioActual.apellidoUsuario;
+            txtTelefono.Text = _usuarioActual.telefonoUsuario;
+            txtCorreo.Text = _usuarioActual.emailUsuario;
         }
 
         private void groupBox5_Enter(object sender, EventArgs e)
@@ -373,10 +374,11 @@ namespace Veterinaria
                 // MEJORAR: Usar el servicio
                 string nuevoId = _citaService.GenerarNuevoId();
 
-                var nuevaCita = new Cita
+                var nuevaCita = new Citas
                 {
-                    _id = nuevoId,
-                    UsuarioId = _usuarioActual._id,
+                   
+                    _id = ObjectId.GenerateNewId(),                   
+                    UsuarioId = _usuarioActual._id.ToString(),
                     Motivo = cmbMotivo.Text.Trim(),
                     Fecha = fecha,
                     Hora = hora,
@@ -389,7 +391,7 @@ namespace Veterinaria
                               MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LimpiarCamposNuevaCita();
-                CargarCitasUsuario(_usuarioActual._id);
+                CargarCitasUsuario(_usuarioActual._id.ToString());
             }
             catch (Exception ex)
             {
@@ -475,7 +477,7 @@ namespace Veterinaria
                 _citaService.CancelarCita(_citaSeleccionadaId);
                 MessageBox.Show("✅ Cita cancelada correctamente.", "Éxito",
                               MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarCitasUsuario(_usuarioActual._id);
+                CargarCitasUsuario(_usuarioActual._id.ToString());
             }
         }
 
@@ -501,7 +503,7 @@ namespace Veterinaria
             MessageBox.Show("Cita actualizada correctamente.", "Éxito",
                           MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            CargarCitasUsuario(_usuarioActual._id);
+            CargarCitasUsuario(_usuarioActual._id.ToString());
 
         }
 

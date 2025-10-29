@@ -17,17 +17,24 @@ namespace Veterinaria
         private readonly IMongoCollection<Usuarios> _usuariosCollection; // Conexión a la colección de usuarios en MongoDB
         private List<Usuarios> _usuariosActuales; // Lista para almacenar los usuarios cargados
         private string _usuarioSeleccionadoId;
-        private readonly IMongoCollection<Cita> _citasCollection; // SOLO AGREGUE ESTA LÍNEA
+        private readonly IMongoCollection<Citas> _citasCollection; // SOLO AGREGUE ESTA LÍNEA
 
 
         public FrmAdmin()
         {
             InitializeComponent();
             // ESTABLECER CONEXIÓN CON MONGODB
+<<<<<<< HEAD
             //var database = ConexionMongo.ObtenerConexion();
             //_usuariosCollection = database.GetCollection<Usuarios>("Usuarios");
             //_citasCollection = database.GetCollection<Cita>("Citas"); // SOLO AGREGUE ESTA LÍNEA
             //ConfigurarDataGrid(); // Configurar apariencia del DataGridView
+=======
+            var database = ConexionMongo.ObtenerConexion();
+            _usuariosCollection = database.GetCollection<Usuarios>("Usuarios");
+            _citasCollection = database.GetCollection<Citas>("Citas"); // SOLO AGREGUE ESTA LÍNEA
+            ConfigurarDataGrid(); // Configurar apariencia del DataGridView
+>>>>>>> 4b99512c3d564b1d01b32b52042c540a9d29cede
         }
         // CONFIGURAR LA APARIENCIA Y COMPORTAMIENTO DEL DATAGRIDVIEW
         private void ConfigurarDataGrid()
@@ -70,7 +77,7 @@ namespace Veterinaria
             try
             {
                 // EXCLUIR AL USUARIO ADMINISTRATIVO ACTUAL DEL LISTADO
-                _usuariosActuales = _usuariosCollection.Find(u => u.rol != "Administrativo").ToList();
+                _usuariosActuales = _usuariosCollection.Find(u => u.rolUsuario != "Administrador").ToList();
                 dgvUsuarios.DataSource = _usuariosActuales;
                 ConfigurarColumnasDataGrid();
             }
@@ -91,33 +98,32 @@ namespace Veterinaria
                 dgvUsuarios.Columns["_id"].Width = 50;
                 dgvUsuarios.Columns["_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                dgvUsuarios.Columns["nombre"].HeaderText = "Nombres";
-                dgvUsuarios.Columns["nombre"].Width = 120;
-                dgvUsuarios.Columns["nombre"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                dgvUsuarios.Columns["nombreUsuario"].HeaderText = "Nombres";
+                dgvUsuarios.Columns["nombreUsuario"].Width = 120;
+                dgvUsuarios.Columns["nombreUsuario"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
-                dgvUsuarios.Columns["apellidos"].HeaderText = "Apellidos";
-                dgvUsuarios.Columns["apellidos"].Width = 120;
-                dgvUsuarios.Columns["apellidos"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                dgvUsuarios.Columns["apellidoUsuario"].HeaderText = "Apellidos";
+                dgvUsuarios.Columns["apellidoUsuario"].Width = 120;
+                dgvUsuarios.Columns["apellidoUsuario"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
-                dgvUsuarios.Columns["tipoDocumento"].HeaderText = "Tipo Doc";
-                dgvUsuarios.Columns["tipoDocumento"].Width = 100;
+             
 
-                dgvUsuarios.Columns["numeroDocumento"].HeaderText = "Cédula";
-                dgvUsuarios.Columns["numeroDocumento"].Width = 90;
-                dgvUsuarios.Columns["numeroDocumento"].ReadOnly = true;
+                dgvUsuarios.Columns["numerodocumento"].HeaderText = "Cédula";
+                dgvUsuarios.Columns["numerodocumento"].Width = 90;
+                dgvUsuarios.Columns["numerodocumento"].ReadOnly = true;
 
-                dgvUsuarios.Columns["telefono"].HeaderText = "Teléfono";
-                dgvUsuarios.Columns["telefono"].Width = 90;
+                dgvUsuarios.Columns["telefonoUsuario"].HeaderText = "Teléfono";
+                dgvUsuarios.Columns["telefonoUsuario"].Width = 90;
 
-                dgvUsuarios.Columns["correo"].HeaderText = "Correo";
-                dgvUsuarios.Columns["correo"].Width = 180;
-                dgvUsuarios.Columns["correo"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                dgvUsuarios.Columns["emailUsuario"].HeaderText = "Correo";
+                dgvUsuarios.Columns["emailUsuario"].Width = 180;
+                dgvUsuarios.Columns["emailUsuario"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
                 //dgvUsuarios.Columns["contraseña"].HeaderText = "Contraseña";
                 //dgvUsuarios.Columns["contraseña"].Width = 100;
                 dgvUsuarios.Columns["contraseña"].Visible = false;
-                dgvUsuarios.Columns["rol"].HeaderText = "Rol";
-                dgvUsuarios.Columns["rol"].Width = 80;
+                dgvUsuarios.Columns["rolUsuario"].HeaderText = "Rol";
+                dgvUsuarios.Columns["rolUsuario"].Width = 80;
             }
         }
 
@@ -134,14 +140,14 @@ namespace Veterinaria
 
             try
             {
-                var usuario = _usuariosCollection.Find(u => u.numeroDocumento == cedula).FirstOrDefault();
+                var usuario = _usuariosCollection.Find(u => u.numerodocumento == cedula).FirstOrDefault();
 
                 if (usuario != null)
                 {
                     dgvUsuarios.DataSource = new List<Usuarios> { usuario };
 
                     // ✅ AQUÍ LLAMAS AL MÉTODO CON EL ID DEL USUARIO ENCONTRADO
-                    ActualizarContadoresUsuarioEspecifico(usuario._id);
+                    ActualizarContadoresUsuarioEspecifico(usuario._id.ToString());
                 }
                 else
                 {
@@ -277,7 +283,7 @@ namespace Veterinaria
                 if (usuarioSeleccionado != null)
                 {
                     //ACTUALIZAR CONTADORES DEL USUARIO SELECCIONADO
-                    ActualizarContadoresUsuarioEspecifico(usuarioSeleccionado._id);
+                    ActualizarContadoresUsuarioEspecifico(usuarioSeleccionado._id.ToString());
                 }
             }
         }
