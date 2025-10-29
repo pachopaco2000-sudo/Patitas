@@ -34,9 +34,8 @@ namespace Veterinaria
 
         private void label6_Click(object sender, EventArgs e)
         {
-            Registro_Usuarios RU = new Registro_Usuarios();
-            RU.Show();
-            this.Hide();
+           
+            
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -97,7 +96,7 @@ namespace Veterinaria
 
         private void btnIniciarsesion_Click_1(object sender, EventArgs e)
         {
-            string id = txtIngresarusuario.Text.Trim(); // Ahora será número de documento
+            string id = txtIngresarusuario.Text.Trim(); 
             string contraseña = txtcontraseñaingresar.Text.Trim();
 
             // Validaciones básicas
@@ -126,9 +125,9 @@ namespace Veterinaria
             }
 
             // Si todo es correcto, redirigimos según el rol
-            MessageBox.Show($"Bienvenido, {usuario.nombre} {usuario.apellidos}");
+            MessageBox.Show($"Bienvenido, {usuario.nombreUsuario} {usuario.apellidoUsuario}");
 
-            if (usuario.rol == "Administrador")
+            if (usuario.rolUsuario == "Administrador")
             {
                 FrmAdmin frmAdmin = new FrmAdmin();
                 frmAdmin.Show();

@@ -7,17 +7,10 @@ namespace Veterinaria
 {
     public static class ConexionMongo
     {
-        // 🔗 Cadena de conexión local (Compass)
         private static readonly string Puerto = "mongodb://localhost:27017";
-
-        // 🐾 Nombre de la base de datos
         private static readonly string BasedeDatos = "Veterinaria";
-
         private static IMongoDatabase _database;
 
-        /// <summary>
-        /// Obtiene la conexión a la base de datos de MongoDB (modo local).
-        /// </summary>
         public static IMongoDatabase ObtenerConexion()
         {
             try
@@ -25,9 +18,13 @@ namespace Veterinaria
                 if (_database != null) return _database;
 
                 var client = new MongoClient(Puerto);
+
+                // 🔍 Forzar conexión con el servidor antes de acceder a la base
+                var databases = client.ListDatabaseNames().ToList();
+
                 _database = client.GetDatabase(BasedeDatos);
 
-                // Verificar conexión (opcional)
+                // Opcional: ver colecciones existentes
                 var collections = _database.ListCollectionNames().ToList();
 
                 return _database;
@@ -39,7 +36,7 @@ namespace Veterinaria
                     "Verifica:\n" +
                     "1. Que MongoDB esté instalado\n" +
                     "2. Que el servicio esté ejecutándose\n" +
-                    "3. Que la base de datos exista";
+                    "3. Que la base de datos exista en Compass";
 
                 MessageBox.Show(mensajeError, "Error de Conexión",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -47,27 +44,15 @@ namespace Veterinaria
             }
         }
 
-        /// <summary>
-        /// Comprueba si la conexión está activa.
-        /// </summary>
         public static bool EstaConectado()
         {
-            try
-            {
-                return ObtenerConexion() != null;
-            }
-            catch
-            {
-                return false;
-            }
+            try { return ObtenerConexion() != null; }
+            catch { return false; }
         }
 
-        /// <summary>
-        /// Devuelve un resumen del estado de la conexión.
-        /// </summary>
         public static string ObtenerInfoConexion()
         {
-            string estado = EstaConectado() ? "✅ Conectado" : "Desconectado";
+            string estado = EstaConectado() ? "✅ Conectado" : "❌ Desconectado";
             return $"Modo: Local (Compass)\nEstado: {estado}\nBase de datos: {BasedeDatos}";
         }
     }

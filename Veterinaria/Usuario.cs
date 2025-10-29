@@ -9,36 +9,32 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Veterinaria
 {
-    public class Usuario
+    public class Usuarios
     {
 
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public string _id { get; set; }
+        public ObjectId _id { get; set; }
 
-        [BsonElement("nombre")]
-        public string nombre { get; set; }
+        [BsonElement("nombreUsuario")]
+        public string nombreUsuario { get; set; }
 
-        [BsonElement("apellidos")]
-        public string apellidos { get; set; }
+        [BsonElement("numerodocumento")]
+        public string numerodocumento { get; set; }
 
-        [BsonElement("tipoDocumento")]
-        public string tipoDocumento { get; set; }
+        [BsonElement("apellidoUsuario")]
+        public string apellidoUsuario { get; set; }
 
-        [BsonElement("numeroDocumento")]
-        public string numeroDocumento { get; set; }
+        [BsonElement("telefonoUsuario")]
+        public string telefonoUsuario { get; set; }
 
-        [BsonElement("telefono")]
-        public string telefono { get; set; }
-
-        [BsonElement("correo")]
-        public string correo { get; set; }
+        [BsonElement("emailUsuario")]
+        public string emailUsuario { get; set; }
 
         [BsonElement("contraseña")]
         public string contraseña { get; set; }
 
-        [BsonElement("rol")]
-        public string rol { get; set; }
+        [BsonElement("rolUsuario")]
+        public string rolUsuario { get; set; }
     }
 }
 

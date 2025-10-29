@@ -7,25 +7,25 @@ namespace Veterinaria
 {
     public class CitaService
     {
-        private readonly IMongoCollection<Cita> _citasCollection;
+        private readonly IMongoCollection<Citas> _citasCollection;
 
         public CitaService(IMongoDatabase database)
         {
-            _citasCollection = database.GetCollection<Cita>("Citas");
+            _citasCollection = database.GetCollection<Citas>("Citas");
         }
 
-        public List<Cita> ObtenerCitasUsuario(string usuarioId)
+        public List<Citas> ObtenerCitasUsuario(string usuarioId)
         {
             try
             {
-                var filter = Builders<Cita>.Filter.Eq(c => c.UsuarioId, usuarioId);
+                var filter = Builders<Citas>.Filter.Eq(c => c.UsuarioId, usuarioId);
                 var citas = _citasCollection.Find(filter).ToList();
-                return citas ?? new List<Cita>();
+                return citas ?? new List<Citas>();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error obteniendo citas: {ex.Message}");
-                return new List<Cita>();
+                return new List<Citas>();
             }
         }
 
@@ -54,7 +54,7 @@ namespace Veterinaria
                 if (ultimaCita == null)
                     return "C001";
 
-                string numeroStr = new string(ultimaCita._id.Where(char.IsDigit).ToArray());
+                string numeroStr = new string(ultimaCita._id.ToString().Where(char.IsDigit).ToArray());
                 if (int.TryParse(numeroStr, out int numero))
                 {
                     return $"C{(numero + 1):D3}";
@@ -69,7 +69,7 @@ namespace Veterinaria
             }
         }
 
-        public void InsertarCita(Cita cita)
+        public void InsertarCita(Citas cita)
         {
             try
             {
@@ -86,13 +86,13 @@ namespace Veterinaria
         {
             try
             {
-                var update = Builders<Cita>.Update
+                var update = Builders<Citas>.Update
                     .Set(c => c.Motivo, motivo)
                     .Set(c => c.Fecha, fecha)
                     .Set(c => c.Hora, hora)
                     .Set(c => c.Estado, "Reprogramada");
 
-                _citasCollection.UpdateOne(c => c._id == id, update);
+                _citasCollection.UpdateOne(c => c._id.ToString() == id, update);
             }
             catch (Exception ex)
             {
@@ -105,7 +105,7 @@ namespace Veterinaria
         {
             try
             {
-                _citasCollection.DeleteOne(c => c._id == id);
+                _citasCollection.DeleteOne(c => c._id.ToString() == id);
             }
             catch (Exception ex)
             {
@@ -114,25 +114,25 @@ namespace Veterinaria
             }
         }
 
-        public List<Cita> ObtenerCitasPorFecha(string fecha)
+        public List<Citas> ObtenerCitasPorFecha(string fecha)
         {
             try
             {
-                return _citasCollection.Find(c => c.Fecha == fecha).ToList() ?? new List<Cita>();
+                return _citasCollection.Find(c => c.Fecha == fecha).ToList() ?? new List<Citas>();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error obteniendo citas por fecha: {ex.Message}");
-                return new List<Cita>();
+                return new List<Citas>();
             }
         }
 
         // MÉTODO ADICIONAL: Para obtener cita por ID
-        public Cita ObtenerCitaPorId(string id)
+        public Citas ObtenerCitaPorId(string id)
         {
             try
             {
-                return _citasCollection.Find(c => c._id == id).FirstOrDefault();
+                return _citasCollection.Find(c => c._id.ToString() == id).FirstOrDefault();
             }
             catch (Exception ex)
             {
