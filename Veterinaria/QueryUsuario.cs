@@ -66,7 +66,7 @@ namespace Veterinaria
             catch (Exception ex)
             {
                 Task.Run(() =>
-                    MessageBox.Show($"Error al actualizar contraseña: {ex.Message}", "Error",
+                    MessageBox.Show($"Error al actualizar contraseña: {ex.Message}", "Errojr",
                                   MessageBoxButtons.OK, MessageBoxIcon.Error)
                 );
                 return false;
