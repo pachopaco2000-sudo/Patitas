@@ -104,7 +104,7 @@
             this.panel_recuperar.Controls.Add(this.label19);
             this.panel_recuperar.Controls.Add(this.pictureBox6);
             this.panel_recuperar.Controls.Add(this.pictureBox7);
-            this.panel_recuperar.Location = new System.Drawing.Point(140, 4);
+            this.panel_recuperar.Location = new System.Drawing.Point(140, 35);
             this.panel_recuperar.Name = "panel_recuperar";
             this.panel_recuperar.Size = new System.Drawing.Size(436, 405);
             this.panel_recuperar.TabIndex = 31;
@@ -238,7 +238,7 @@
             this.Panel_Registro.Controls.Add(this.pictureBox3);
             this.Panel_Registro.Controls.Add(this.lblIngresar2);
             this.Panel_Registro.Controls.Add(this.pictureBox5);
-            this.Panel_Registro.Location = new System.Drawing.Point(126, 7);
+            this.Panel_Registro.Location = new System.Drawing.Point(126, 38);
             this.Panel_Registro.Name = "Panel_Registro";
             this.Panel_Registro.Size = new System.Drawing.Size(434, 634);
             this.Panel_Registro.TabIndex = 29;
@@ -480,7 +480,7 @@
             this.Panel_Ingresar.Controls.Add(this.txtcontraseñaingresar);
             this.Panel_Ingresar.Controls.Add(this.pictureBox2);
             this.Panel_Ingresar.Controls.Add(this.txtIngresarusuario);
-            this.Panel_Ingresar.Location = new System.Drawing.Point(123, 11);
+            this.Panel_Ingresar.Location = new System.Drawing.Point(123, 42);
             this.Panel_Ingresar.Name = "Panel_Ingresar";
             this.Panel_Ingresar.Size = new System.Drawing.Size(434, 540);
             this.Panel_Ingresar.TabIndex = 30;
@@ -714,7 +714,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(686, 628);
+            this.ClientSize = new System.Drawing.Size(686, 691);
             this.Controls.Add(this.Panel_Registro);
             this.Controls.Add(this.panel_recuperar);
             this.Controls.Add(this.Panel_Ingresar);

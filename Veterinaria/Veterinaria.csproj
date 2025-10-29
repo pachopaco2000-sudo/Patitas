@@ -195,6 +195,12 @@
     <Compile Include="Registro_Usuarios.Designer.cs">
       <DependentUpon>Registro_Usuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControl1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl1.Designer.cs">
+      <DependentUpon>UserControl1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Usuario.cs" />
     <Compile Include="UsuariosAlias.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -222,6 +228,9 @@
     <EmbeddedResource Include="Registro_Usuarios.resx">
       <DependentUpon>Registro_Usuarios.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControl1.resx">
+      <DependentUpon>UserControl1.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="libmongocrypt.dylib" />
     <None Include="libmongocrypt.so" />
     <None Include="packages.config" />
@@ -246,6 +255,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mongocrypt.dll" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 0835331.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 0837501.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 083750.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 083533.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 083405.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 083218.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 082524.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 082135.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 080808.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 0648421.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-29 081235.png" />
     <None Include="Resources\Captura de pantalla 2025-10-29 064842.png" />
     <None Include="Resources\Captura de pantalla 2025-10-28 185503.png" />
     <None Include="Resources\boton %281%29.png" />
