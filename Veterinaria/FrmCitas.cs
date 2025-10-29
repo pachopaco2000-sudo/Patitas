@@ -32,9 +32,9 @@ namespace Veterinaria
             {
                 InitializeComponent();
 
-                var database = ConexionMongo.ObtenerConexion();
-                _citaService = new CitaService(database);
-                _usuarioActual = usuario;
+                //var database = ConexionMongo.ObtenerConexion();
+                //_citaService = new CitaService(database);
+                //_usuarioActual = usuario;
 
                 ConfigurarDataGrid();
                 CargarCitasUsuario(_usuarioActual._id);

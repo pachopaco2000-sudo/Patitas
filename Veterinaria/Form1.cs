@@ -14,15 +14,90 @@ namespace Veterinaria
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
             try
             {
-                var db = ConexionMongo.ObtenerConexion();
-                //MessageBox.Show("Conectado a MongoDB: " + db.DatabaseNamespace.DatabaseName);
+                // Intentar leer la cadena completa desde variable de entorno "MONGO_CONN" y nombre de BD desde "MONGO_DB"
+                var envConn = Environment.GetEnvironmentVariable("MONGO_CONN");
+                var envDb = Environment.GetEnvironmentVariable("MONGO_DB");
+
+                string connectionString;
+                string databaseName;
+
+                if (!string.IsNullOrWhiteSpace(envConn) && !string.IsNullOrWhiteSpace(envDb))
+                {
+                    connectionString = envConn;
+                    databaseName = envDb;
+                }
+                else
+                {
+                    // Cadena provista por Atlas con placeholder
+                    var atlasTemplate = "mongodb+srv://patitas:<db>@cluster0.uxnei2v.mongodb.net/?appName=Cluster0";
+
+                    // Pedir contraseña al usuario (no se guarda)
+                    var password = PromptInput("Ingresa la contraseña del usuario 'patitas' (no se guardará):", "Contraseña MongoDB", "");
+                    if (string.IsNullOrWhiteSpace(password))
+                    {
+                        MessageBox.Show("No se ingresó contraseña. Conexión cancelada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Pedir nombre de la base de datos
+                    databaseName = PromptInput("Ingresa el nombre de la base de datos a usar:", "Nombre BD", "PatitasDB");
+                    if (string.IsNullOrWhiteSpace(databaseName))
+                    {
+                        MessageBox.Show("No se ingresó nombre de la base de datos. Conexión cancelada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Reemplazar placeholder por contraseña (escape para seguridad)
+                    var escaped = Uri.EscapeDataString(password);
+                    connectionString = atlasTemplate.Replace("<db>", escaped);
+                }
+
+                // Conectar
+                ConexionMongo.Connect(connectionString, databaseName);
+
+                // Probar conexión
+                if (ConexionMongo.TestConnection())
+                {
+                    var db = ConexionMongo.ObtenerConexion();
+                    //MessageBox.Show("Conectado a MongoDB: " + db.DatabaseNamespace.DatabaseName);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al conectar: " + ex.Message);
+            }
+        }
+
+        // Helper simple para pedir entrada de texto sin depender de Microsoft.VisualBasic
+        private static string PromptInput(string text, string caption, string defaultValue = "")
+        {
+            using (Form prompt = new Form())
+            {
+                prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                prompt.StartPosition = FormStartPosition.CenterScreen;
+                prompt.Width =420;
+                prompt.Height =160;
+                prompt.Text = caption;
+                prompt.MinimizeBox = false;
+                prompt.MaximizeBox = false;
+
+                Label textLabel = new Label() { Left =10, Top =10, Width =380, Text = text };
+                TextBox textBox = new TextBox() { Left =10, Top =35, Width =380, Text = defaultValue };
+                Button confirmation = new Button() { Text = "OK", Left =220, Width =80, Top =70, DialogResult = DialogResult.OK };
+                Button cancel = new Button() { Text = "Cancelar", Left =310, Width =80, Top =70, DialogResult = DialogResult.Cancel };
+
+                prompt.Controls.Add(textLabel);
+                prompt.Controls.Add(textBox);
+                prompt.Controls.Add(confirmation);
+                prompt.Controls.Add(cancel);
+
+                prompt.AcceptButton = confirmation;
+                prompt.CancelButton = cancel;
+
+                var result = prompt.ShowDialog();
+                return result == DialogResult.OK ? textBox.Text : string.Empty;
             }
         }
 

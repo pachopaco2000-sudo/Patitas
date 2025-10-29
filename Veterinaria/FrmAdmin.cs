@@ -24,10 +24,10 @@ namespace Veterinaria
         {
             InitializeComponent();
             // ESTABLECER CONEXIÓN CON MONGODB
-            var database = ConexionMongo.ObtenerConexion();
-            _usuariosCollection = database.GetCollection<Usuarios>("Usuarios");
-            _citasCollection = database.GetCollection<Cita>("Citas"); // SOLO AGREGUE ESTA LÍNEA
-            ConfigurarDataGrid(); // Configurar apariencia del DataGridView
+            //var database = ConexionMongo.ObtenerConexion();
+            //_usuariosCollection = database.GetCollection<Usuarios>("Usuarios");
+            //_citasCollection = database.GetCollection<Cita>("Citas"); // SOLO AGREGUE ESTA LÍNEA
+            //ConfigurarDataGrid(); // Configurar apariencia del DataGridView
         }
         // CONFIGURAR LA APARIENCIA Y COMPORTAMIENTO DEL DATAGRIDVIEW
         private void ConfigurarDataGrid()

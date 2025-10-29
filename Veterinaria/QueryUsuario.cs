@@ -12,8 +12,15 @@ namespace Veterinaria
 
         public QueryUsuario()
         {
-            _database = ConexionMongo.ObtenerConexion();
-            _usuariosCollection = _database.GetCollection<Usuarios>("Usuarios");
+            try
+            {
+                _database = ConexionMongo.ObtenerConexion();
+                _usuariosCollection = _database.GetCollection<Usuarios>("Usuarios");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error inicializando QueryUsuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // MÉTODO PARA BUSCAR POR NÚMERO DE DOCUMENTO (Login)
